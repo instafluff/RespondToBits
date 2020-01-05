@@ -23,6 +23,7 @@
         let value = bits;
         if( params.get( "multiply" ) ) {
             value *= parseFloat( params.get( "multiply" ) );
+            value = Math.floor( value );
         }
         command = command.replace( "VALUE", value );
         ComfyJS.Say( command );
