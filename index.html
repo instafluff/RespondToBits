@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <title>Auto-Respond to Bit Cheers on Stream!</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135113520-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-135113520-1');
+  </script>
+  <script src="web/comfy.min.js"></script>
+</head>
+
+<body>
+  <h1 id="text"></h1>
+  <script>
+    const params = new URLSearchParams( location.search );
+    ComfyJS.onCheer = ( user, message, bits, flags, extra ) => {
+        // console.log( extra );
+        let command = params.get( "messageFormat" ).replace( "USERNAME", extra.username );
+        let value = bits;
+        if( params.get( "multiply" ) ) {
+            value *= parseFloat( params.get( "multiply" ) );
+        }
+        command = command.replace( "VALUE", value );
+        ComfyJS.Say( command );
+        // document.querySelector( "#text" ).innerText = command;
+    }
+    ComfyJS.onChat = ( user, message, flags, self, extra ) => {
+        // console.log( user, message );
+    }
+    // ComfyJS.onSub = ( user, message, subTierInfo, extra ) => {
+    // }
+    // ComfyJS.onResub = ( user, message, streamMonths, cumulativeMonths, subTierInfo, extra ) => {
+    // }
+    // ComfyJS.onSubGift = ( gifterUser, streakMonths, recipientUser, senderCount, subTierInfo, extra ) => {
+    // }
+    // ComfyJS.onSubMysteryGift = ( gifterUser, numbOfSubs, senderCount, subTierInfo, extra ) => {
+    // }
+    ComfyJS.Init( params.get( "channel" ), params.get( "oauth" ) );
+  </script>
+</body>
+
+</html>
